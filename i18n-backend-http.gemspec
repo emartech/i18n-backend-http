@@ -10,6 +10,7 @@ Gem::Specification.new(name, I18n::Backend::Http::VERSION) do |s|
   s.license = 'MIT'
   s.add_runtime_dependency "i18n"
   s.add_runtime_dependency "faraday"
+  s.add_runtime_dependency 'faraday_middleware'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'maxitest'
   s.add_development_dependency 'vcr', '~> 2.5'

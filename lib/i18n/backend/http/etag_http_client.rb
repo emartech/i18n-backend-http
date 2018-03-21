@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday_middleware'
 
 module I18n
   module Backend
@@ -11,8 +12,11 @@ module I18n
         end
 
         def download(path, etag:)
-          @client ||= Faraday.new(@options[:host])
-          start     = Time.now
+          @client ||= Faraday.new(@options[:host]) do |b|
+            b.use FaradayMiddleware::FollowRedirects
+            b.adapter :net_http
+          end
+          start = Time.now
 
           response = @client.get(path) do |request|
             request.headers.merge!(@options[:headers]) if @options[:headers]
